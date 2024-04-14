@@ -6,10 +6,8 @@ import { addTask, removeTask, setCompleted, removeAllTasks } from "./state/reduc
 import { useDispatch, useSelector } from "react-redux";
 
 export default function App() {
-  const todosState = useSelector(state => state.todos);
+  const todosState = useSelector(state => state.todos.todos);
   const dispatch = useDispatch();
-
-  console.log(todosState)
 
   useEffect(() => {
     const openModalButton = document.querySelector(".open-modal");
@@ -27,7 +25,6 @@ export default function App() {
       modal.close();
       modal_input.value = "";
     })
-
 
     modal_addTask.addEventListener("click", () => {
       const taskContent = modal_input.value;

@@ -1,25 +1,28 @@
 /* eslint-disable no-unused-vars */
-import { createSlice } from "@reduxjs/toolkit";
+import { combineReducers, createSlice } from "@reduxjs/toolkit";
 
 const todosSlice = createSlice({
-    initialState: [],
+    // initialState should be an object not an array :)
+    initialState: { todos: [] },
     name: "todosSlice",
     reducers: {
         addTask: (state, action) => {
             if (action.payload.content !== "") {
-                state.push(action.payload)
+                return {
+                    todos: [...state.todos, action.payload]
+                }
             }
         },
         removeTask: (state, action) => {
-            let newStat = state.filter(taskObj => taskObj.id !== action.payload);
+            let newStat = { todos: state.todos.filter(taskObj => taskObj.id !== action.payload) };
             return newStat
         },
         setCompleted: (state, action) => {
-            let index = state.findIndex(todoObj => todoObj.id === action.payload);
-            state[index].isCompleted = state[index].isCompleted ? false : true;
+            let index = state.todos.findIndex(todoObj => todoObj.id === action.payload);
+            state.todos[index].isCompleted = state.todos[index].isCompleted ? false : true;
         },
         removeAllTasks: (state, action) => {
-            return []
+            return { todos: [] }
         }
     }
 });
